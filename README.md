@@ -14,6 +14,7 @@ What problem is solved.
 ## Documentation
 
 Which types/data structures are used. Core ideas.
+Mathematical properties and how we check them.
 
 ## Todo
 
