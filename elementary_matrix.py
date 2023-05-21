@@ -1,35 +1,32 @@
-"""Generator functions of elementary matrices."""
+from properties import *
 
-# identity matrix
-def I(n):
-    return [[(i, 1)] for i in range(n)]
+def I(n: int) -> M:
+    """return an identity matrix with dimension n"""
 
-
-# r1 = r2, r2 = r1
+    return [[0 if j != i else 1 for j in range(n)] for i in range(n)]
 
 # TODO: Maybe these functions should receive the matrix as input instead of just n? not sure
-def S(n, r1, r2):
-    """elementary matrix to swap rows r1 and r2"""
-    s = I(n)
-    s[r2], s[r1] = s[r1], s[r2]
-    return s
+def S(n: int, r1: int, r2: int) -> M:
+    """return a swap matrix by row r1 and r2 with dimension n"""
 
+    id = I(n)
+    id[r2], id[r1] = id[r1], id[r2]
+    return id
 
-# r1 = r1 * a
-def M(n, r1, a):
-    """elementary matrix to multiply (scale) a row"""
-    assert a < 0 or a > 0
-    m = I(n)
-    m[r1] = [(r1, a)]
-    return m
+def M(n: int, r1: int, a: int)  -> M:
+    """return a scale matrix by row r1 with argument a and dimension n"""
 
+    # assert a < 0 or a > 0 #it's fine when a = 0
+    id = I(n)
+    id[r1][r1] = a
+    return id
 
-# r1 = r1 + r2 * a
-def A(n, r1, r2, a):
-    """elementary matrix to add a multiple of r2 to r1"""
-    assert a < 0 or a > 0
-    elementary = I(n)
-    # appending is wrong, no? a[r1].append((r2, a)). also there was a name clash with variable `a`
-    elementary[r1][r2] = a
+def A(n: int, r1: int, r2: int, a: int) -> M:
+    """return an append matrix by row r1 and r2 with argument a and dimension n
     
-    return elementary
+    r1 = r1 + r2 * a
+    """
+
+    id = I(n)
+    id[r1][r2] = 1 + a if r1 == r2 else a
+    return id
