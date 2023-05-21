@@ -1,3 +1,7 @@
+
+# TODO: Generate list (queue) of row/column indices of the places that should become a zero
+# TODO: Generate elementary matrices based on the queue
+
 def gauss_algorithm(is_traced=False):
     return
 
