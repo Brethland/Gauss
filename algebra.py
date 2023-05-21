@@ -24,13 +24,17 @@ def to_reduced_form(M):
 
 
 def scalar_mult(M, k):
+    # TODO: docstring
+    # TODO: Nicolas implement
     return [list(map(lambda t: (t[0], k * t[1]), M[i])) for i in range(len(M))]
 
 
-def add(M1, M2):
+def add(M1: M, M2: M) -> M:
+    # TODO: docstring
+    # TODO: Nicolas: implement
     if len(M1) != len(M2):
         return ((), "Rank is not identified")
-    return
+    return M1
 
 
 def mult(M1, M2):
