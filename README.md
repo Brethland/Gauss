@@ -9,7 +9,24 @@ This is the most programmation-oriented project. You are asked to write a progra
 
 ## Gauß algorithm
 
-What problem is solved. 
+What problem is solved...
+
+It has 3 elementary operations. Add the multiple of another row to the current row.
+
+
+
+
+To generate zeroes in the first column, the first row is used.
+To generate zeroes in the 2nd column, the 2nd row is rused.
+To generate zeroes in the nth column the nth row is used.
+
+Does it have to be that way / is it always working?
+
+
+### Implementation ideas / approaches
+
+- Sort the list of rows decreasing by their absolute values from left two right (should bring all zero lines to the bottom)
+- Generate a stack/queue of todos for generating zeroes at specific index locations.
 
 ## Documentation
 
