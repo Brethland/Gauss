@@ -7,7 +7,6 @@ def I(n: int) -> M:
 
     return [[0 if j != i else 1 for j in range(n)] for i in range(n)]
 
-# TODO: Maybe these functions should receive the matrix as input instead of just n? not sure
 def S(n: int, r1: int, r2: int) -> M:
     """return a swap matrix by row r1 and r2 with dimension n"""
 
@@ -19,6 +18,8 @@ def M(n: int, r1: int, a: int)  -> M:
     """return a scale matrix by row r1 with argument a and dimension n"""
 
     # assert a < 0 or a > 0 #it's fine when a = 0
+    # TODO: not sure, as it will throw away all
+    # information of a row. So it should not occur in a correct implementation
     elementary_scaled = I(n)
     elementary_scaled[r1][r1] = a
     return elementary_scaled
