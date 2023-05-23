@@ -18,3 +18,23 @@ Rat = tuple[int, int]
 F = Union[Rat, float, int] 
 
 #Num = union[int, float, Rat]
+
+
+def all_pivots_are_one(m: M) -> bool:
+
+    # TODO: Simplify by using a "get pivots" function
+    for row in m:
+        for val in row:
+            if val == 0:
+                continue
+            if val != 1:
+                return False
+    return True
+
+def below_pivots_only_zeroes(m: M) -> bool:
+    return False
+
+def is_row_echelon_form(m: M) -> bool:
+    """Function to check if Matrix m is in row_echelon_form."""
+    return all_pivots_are_one(m) and below_pivots_only_zeroes(m)
+
