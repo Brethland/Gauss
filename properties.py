@@ -4,8 +4,11 @@ from typing import Union
 
 # Custom data types:
 
+#
+Row = list[int]
+
 # Matrix is a list of list of ints. This is a list of rows.
-M = list[list[int]]
+M = list[Row]
 
 # Rationals as Integer-Tuples (are named tuples possible/better?)
 Rat = tuple[int, int]  
