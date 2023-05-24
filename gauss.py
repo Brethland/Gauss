@@ -1,15 +1,15 @@
 from algebra import *
 from elementary_matrix import *
 
-# TODO: Generate list (queue) of row/column indices of the places that should become a zero
-# TODO: Generate elementary matrices based on the queue
+# TODO: Add step-by-step application of the elementary matrix stack for demonstration
+
 
 def gauss_algorithm_iterative(m : M, is_traced=False) -> tuple[M, int, list[M]]:
     """
     Perform Gauss algorithm (iterative)
-    1. Get most-left column with non-zero values
-    2. If the top-row value is zero --> SWAP R0 with first non-zero row (or put to bottom?)
-    3. Normalize row 0, making the pivot 1.
+    1. Get most-left column with non-zero values (find best row for first column, otherwise remove this column
+    2. If the top-row value is zero --> SWAP R0 with last non-zero row (or put to bottom using nullrow_cnt)
+    3. Normalize row 0, making the pivot 1. (not necessary)
     4. Make zeroes below the pivot (by adding the respective inverse multiple
     5. Perform 1-4 with remaining rows.
 

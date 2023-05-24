@@ -37,7 +37,21 @@ Mathematical properties and how we check them.
 
 - [ ] Problem description
 - [ ] Implementation
+  - [ ] import?
 - [ ] Documentation
+- [ ] pretty print?
 - [ ] Presentation (notebook)
   - [ ] Finish
   - [ ] Upload
+
+
+## Presentation Outline:
+
+- Motivation: Algorithm itself (ops, elementary matrices)  Chenyi
+- Matrix Algebra in Python (data types, functions)  
+  - Outline the signatures, types    Nicolas
+  - properties (check functions)
+- (Demo)
+- Go through code
+  - don't explain the implementation, but show an example   Chenyi
+- tests?!
