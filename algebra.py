@@ -25,11 +25,13 @@ def get_pivot(n: int, row: Row) -> tuple[int, int]:
             pivot_index += 1
             continue
         else:
-            return (pivot_index, n)
+            # return (pivot_index, n)
+            return (pivot_index, row[pivot_index])
+    return (None, None)
 
 
-assert get_pivot(0, [1, 2, 3]) == (0, 0)
-assert get_pivot(0, [0, 2, 3]) == (1, 0)
+# assert get_pivot(0, [1, 2, 3]) == (0, 0)
+# assert get_pivot(0, [0, 2, 3]) == (1, 0)
 
 
 def get_pivots(m: M) -> list[tuple[int, int]]:
@@ -43,8 +45,8 @@ def get_pivots(m: M) -> list[tuple[int, int]]:
     # return list(map(get_pivot, *enumerate(m)))
 
 
-print(get_pivots([[1, 2, 3], [0, 2, 3], [0, 0, 3]]))
-assert get_pivots([[1, 2, 3], [0, 2, 3], [0, 0, 3]]) == [(0, 0), (1, 1), (2, 2)]
+# print(get_pivots([[1, 2, 3], [0, 2, 3], [0, 0, 3]]))
+# assert get_pivots([[1, 2, 3], [0, 2, 3], [0, 0, 3]]) == [(0, 0), (1, 1), (2, 2)]
 
 
 def scalar_mult(M1: M, k: F) -> M:
@@ -153,3 +155,23 @@ def mult_strassen(M1: M, M2: M) -> M:
 # M1 = [[1, 2], [3, 4]]
 # M2 = [[1, 1], [1, 1]]
 # print(mult_strassen(M1, M2))
+
+def all_pivots_are_one(m: M) -> bool:
+
+    pivots = list(map(lambda t : t[1] ,get_pivots(m)))
+    if(next((k for k in pivots if k != 1), 1) != 1):
+        return True
+    else:
+        return False
+
+def below_pivots_only_zeroes(m: M) -> bool:
+    pivots_index = list(map(lambda t : t[0], get_pivots(m)))
+    for (i,c) in pivots_index:
+        if(sum(column(m, c)[i + 1:]) != 0) :
+            return False
+    return True
+
+def is_row_echelon_form(m: M) -> bool:
+    """Function to check if Matrix m is in row_echelon_form."""
+    return all_pivots_are_one(m) and below_pivots_only_zeroes(m)
+
