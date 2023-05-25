@@ -1,52 +1,19 @@
 from properties import *
 from itertools import chain
 
-# def fill(R):
-#     ex_index = list(map(lambda t: t[0], R))
-#     m = max(ex_index)
-#     return [_ for i in range(m)]
-
-
-# def to_normal_form(M):
-#     return [list(map(fill, M[i])) for i in range(len(M))]
-
-
-# def to_reduced_form(M):
-#     return
-
-# Get pivot coordinate for a single Row. Pass Matrix or Row as input?
-
-
-def get_pivot(n: int, row: Row) -> tuple[int, int]:
-    """Return the pivot_index of a row along with the row index received."""
+def get_pivot(row: Row) -> tuple[int, int]:
+    """Return the pivot_index of a row along with the column index received."""
     pivot_index = 0
     for val in row:
         if val == 0:
             pivot_index += 1
             continue
         else:
-            # return (pivot_index, n)
             return (pivot_index, row[pivot_index])
     return (None, None)
 
-
-# assert get_pivot(0, [1, 2, 3]) == (0, 0)
-# assert get_pivot(0, [0, 2, 3]) == (1, 0)
-
-
 def get_pivots(m: M) -> list[tuple[int, int]]:
-    pivots = []
-    for i, row in enumerate(m):
-        pivots.append(get_pivot(i, row))
-    return pivots
-
-    # return [ get_pivot(*enumerate(m)) ]
-
-    # return list(map(get_pivot, *enumerate(m)))
-
-
-# print(get_pivots([[1, 2, 3], [0, 2, 3], [0, 0, 3]]))
-# assert get_pivots([[1, 2, 3], [0, 2, 3], [0, 0, 3]]) == [(0, 0), (1, 1), (2, 2)]
+    return list(map(lambda row: get_pivot(row), m))
 
 
 def scalar_mult(M1: M, k: F) -> M:
@@ -83,13 +50,6 @@ def add_iterative(M1: M, M2: M) -> M:
             row_sum.append(M1[row_index][col_index] + M2[row_index][col_index])
         M_sum.append(row_sum)
     return M_sum
-
-
-# M1 = [[1,2,3], [3,2,1]]
-# M2 = [[1,1,1], [0,0,0]]
-# print(M1)
-# print(M2)
-# print(add_iterative(M1, M2))
 
 
 def column(M1: M, c: int) -> M:
@@ -151,13 +111,7 @@ def mult_strassen(M1: M, M2: M) -> M:
             C.append(list(chain.from_iterable(row)))
     return C
 
-
-# M1 = [[1, 2], [3, 4]]
-# M2 = [[1, 1], [1, 1]]
-# print(mult_strassen(M1, M2))
-
 def all_pivots_are_one(m: M) -> bool:
-
     pivots = list(map(lambda t : t[1] ,get_pivots(m)))
     if(next((k for k in pivots if k != 1), 1) != 1):
         return True

@@ -17,9 +17,7 @@ def S(n: int, r1: int, r2: int) -> M:
 def M(n: int, r1: int, a: int)  -> M:
     """return a scale matrix by row r1 with argument a and dimension n"""
 
-    # assert a < 0 or a > 0 #it's fine when a = 0
-    # TODO: not sure, as it will throw away all
-    # information of a row. So it should not occur in a correct implementation
+    assert a < 0 or a > 0
     elementary_scaled = I(n)
     elementary_scaled[r1][r1] = a
     return elementary_scaled
@@ -30,6 +28,7 @@ def A(n: int, r1: int, r2: int, a: int) -> M:
     r1 = r1 + r2 * a
     """
 
+    assert a < 0 or a > 0
     elementary_added = I(n)
     elementary_added[r1][r2] = 1 + a if r1 == r2 else a
     return elementary_added
