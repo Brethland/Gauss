@@ -1,4 +1,4 @@
-"""This file contains definitions of mathematical properties and check-functions."""
+"""This file contains definitions of mathematical properties."""
 
 from fractions import Fraction
 
@@ -13,3 +13,5 @@ Row = list[F]
 # Matrix is a list of list of ints. This is a list of rows.
 M = list[Row]
 
+def show(m: M):
+    print('\n'.join(['\t'.join([str(ele) for ele in row]) for row in m]))

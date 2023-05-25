@@ -1,5 +1,6 @@
 from algebra import *
 from elementary_matrix import *
+from functools import reduce
 
 # TODO: Add step-by-step application of the elementary matrix stack for demonstration
 
@@ -80,11 +81,28 @@ def normalize(m: M, is_traced=False) -> tuple[M, int, list[M]]:
     else:
         return (m, rank, None)
 
-# print(normalize([[Fraction(1, 1), Fraction(0, 1), Fraction(1, 1)], [Fraction(1, 1), Fraction(1, 1), Fraction(1, 1)], [Fraction(0, 1), Fraction(1, 1), Fraction(1, 1)]], True))
-
 def echelon_form(m : M):
     return gauss_algorithm_iterative(m)[0]
 
+def rank(m: M) -> M:
+    return gauss_algorithm_iterative(m)[1]
 
 def reduced_echelon_form(m : M):
     return normalize(m)[0]
+
+def inverse(m: M) -> M:
+    (id, rank, trace) = normalize(m, True)
+    assert(rank == len(m))
+    trace.reverse()
+    # if(rank != 1 and (rank & (rank - 1) != 0)):
+    #     return reduce(mult_strassen, trace, I(rank))
+    # else:
+    return reduce(mult, trace, I(rank))
+    
+# show(inverse([[1, 1, 0], [0, 1, 1], [1, 1, 1]]))
+
+def one_step(m: M, t: list[M]) -> tuple[M, list[M]]:
+    assert(len(t) > 0)
+    m = mult(t[0], m)
+    show(m)
+    return (m, t[1:])
