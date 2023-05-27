@@ -50,28 +50,8 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack) 
 
     return gauss_rec(m, nowrow + 1, nowcol + 1, n_rows, n_cols, stack)
     
-    
-
-    # TODO: put to function, reestablish/update after any operation that can create 0-rows.
-    n_zerorows = 0
-    for i, row in enumerate(m):
-        # TODO; Bug? what happens if last row is also nullrow?
-        if is_nullrow(row):
-            m = S(n_cols, i, rank)
-            n_zerorows += 1
-    rank = n_rows - n_zerorows
-
-    
-    #    last_useful_row = rank
-
-    better_candidate = nowrow
-    for rowindex, value in enumerate(col(nowcol)):
-        pass
-
-    return gauss_split()
 
 def gauss_rec_go(m: M):
     """run recursive gauss_split with initial values"""
-    # TODO: as preparation: put all zerorows to bottom?
-    return gauss_split(m, 0, 0, len(m), len(m[0]), []) # lastrow as len(m) - 1)
+    return gauss_rec(m, 0, 0, len(m), len(m[0]), []) # lastrow as len(m) - 1)
 
