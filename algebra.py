@@ -19,7 +19,6 @@ def get_pivots(m: M) -> list[tuple[int, int]]:
 def scalar_mult(M1: M, k: F) -> M:
     """return k*m as scalar multiplication on matrix, k is from a field"""
 
-    # TODO: Nicolas implement
     return [list(map(lambda t: k * t, M1[i])) for i in range(len(M1))]
 
 
@@ -61,6 +60,8 @@ def mult(M1: M, M2: M) -> M:
     """matrix multiplication, using naive method"""
 
     assert len(M1[0]) == len(M2)
+    if is_identity_matrix(M2):
+        return M1
     return [
         [sum(x * y for x, y in zip(row, column(M2, c))) for c in range(len(M2[0]))]
         for row in M1
