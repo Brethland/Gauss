@@ -122,3 +122,19 @@ def one_step(m: M, t: list[M]) -> tuple[M, list[M]]:
     m = mult(t[0], m)
     show(m)
     return (m, t[1:])
+
+
+class StepByStep:
+    """A class containing matrix and a stack of elementary operations,
+    applying them one by one"""
+    def __init__(self, matrix, stack):
+        self.matrix = matrix
+        self.elementary_stack = stack
+    def __next__(self):
+        if len(self.matrix) == 0:
+            print()
+        else:
+            self.matrix = mult(self.elementary_stack[0], self.matrix)
+            show(self.matrix)
+            self.elementary_stack = self.elementary_stack[1:]
+        return self.matrix

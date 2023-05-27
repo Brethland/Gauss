@@ -22,7 +22,7 @@ Big_Matrix = [list(uniform(0, 100) for i in range(100)) for j in range(100)]
 Real_echelon, _, Elementary_trace = gauss_algorithm_iterative(Real_Matrix, True)
 show(Real_echelon)
 
-elementary_steps = reversed(Elementary_trace)
+elementary_steps = list(reversed(Elementary_trace))
 
 Result, next_steps = one_step(Real_Matrix, elementary_steps)
 
@@ -31,3 +31,11 @@ show(Result)
 
 
 
+print("----")
+
+steps = StepByStep(Real_Matrix, elementary_steps)
+
+next(steps)
+next(steps)
+next(steps)
+next(steps)
