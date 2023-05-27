@@ -21,7 +21,7 @@ def find_better_candidate(m : M, c: int, end_column: int, now_row: int) -> int:
     for s in range(now_row + 1, row_dim) :
         if col[s] != 0:
             return s
-    find_better_candidate(m, c + 1, end_column, now_row)
+    return find_better_candidate(m, c + 1, end_column, now_row)
 
 def gauss_algorithm_iterative(m : M, is_traced=False) -> tuple[M, int, list[M]]:
     """
@@ -65,7 +65,7 @@ def gauss_algorithm_iterative(m : M, is_traced=False) -> tuple[M, int, list[M]]:
     if(is_traced) :
         return (m, row_dim - nullrow_cnt, trace)
     else:
-        return (m, row_dim - nullrow_cnt, None)
+        return (m, row_dim - nullrow_cnt, [])
 
 def normalize(m: M, is_traced=False) -> tuple[M, int, list[M]]:
     row_dim = len(m)
@@ -86,15 +86,15 @@ def normalize(m: M, is_traced=False) -> tuple[M, int, list[M]]:
     if(is_traced):
         return (m, rank, trace)
     else:
-        return (m, rank, None)
+        return (m, rank, [])
 
-def echelon_form(m : M):
+def echelon_form(m : M) -> M:
     return gauss_algorithm_iterative(m)[0]
 
-def rank(m: M) -> M:
+def rank(m: M) -> int:
     return gauss_algorithm_iterative(m)[1]
 
-def reduced_echelon_form(m : M):
+def reduced_echelon_form(m : M) -> M:
     return normalize(m)[0]
 
 def inverse(m: M) -> M:
@@ -105,8 +105,6 @@ def inverse(m: M) -> M:
     #     return reduce(mult_strassen, trace, I(rank))
     # else:
     return reduce(mult, trace, I(rank))
-    
-# show(inverse([[1, 1, 0], [0, 1, 1], [1, 1, 1]]))
 
 def one_step(m: M, t: list[M]) -> tuple[M, list[M]]:
     """

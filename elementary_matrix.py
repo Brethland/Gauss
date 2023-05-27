@@ -14,7 +14,7 @@ def S(n: int, r1: int, r2: int) -> M:
     s[r2], s[r1] = s[r1], s[r2]
     return s
 
-def M(n: int, r1: int, a: int)  -> M:
+def M(n: int, r1: int, a: F)  -> M:
     """return a scale matrix by row r1 with argument a and dimension n"""
 
     assert a < 0 or a > 0
@@ -22,7 +22,7 @@ def M(n: int, r1: int, a: int)  -> M:
     elementary_scaled[r1][r1] = a
     return elementary_scaled
 
-def A(n: int, r1: int, r2: int, a: int) -> M:
+def A(n: int, r1: int, r2: int, a: F) -> M:
     """return an append matrix by row r1 and r2 with argument a and dimension n
     
     r1 = r1 + r2 * a

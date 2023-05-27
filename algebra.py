@@ -1,7 +1,7 @@
 from properties import *
 from itertools import chain
 
-def get_pivot(row: Row) -> tuple[int, int]:
+def get_pivot(row: Row) -> tuple[int | None, F | None]:
     """Return the pivot_index of a row along with the column index received."""
     pivot_index = 0
     for val in row:
@@ -12,7 +12,7 @@ def get_pivot(row: Row) -> tuple[int, int]:
             return (pivot_index, row[pivot_index])
     return (None, None)
 
-def get_pivots(m: M) -> list[tuple[int, int]]:
+def get_pivots(m: M) -> list[tuple[int | None, F | None]]:
     return list(map(lambda row: get_pivot(row), m))
 
 
@@ -22,25 +22,10 @@ def scalar_mult(M1: M, k: F) -> M:
     # TODO: Nicolas implement
     return [list(map(lambda t: k * t, M1[i])) for i in range(len(M1))]
 
-
-def add(M1: M, M2: M) -> tuple[M, str]:
-    """element-wise addition of two matrices. in functional style.
-
-    fp alternative approch using map:
-    >>> from operator import add
-    >>> list( map(add, list1, list2) )
-    [5, 7, 9]
-    """
-
-    if len(M1) != len(M2):
-        return ((), "Rank is not identified")
-    return ([sum(x) for x in zip(M1, M2)], "")
-
-
-def add_iterative(M1: M, M2: M) -> M:
+def add(M1: M, M2: M) -> M:
     """element-wise addition of two matrices. naive iterative way."""
 
-    assert len(M1) == len(M2)  # extract to properties.py
+    assert len(M1) == len(M2) and len(M1[0]) == len(M2[0])  # extract to properties.py
 
     # element-wise addition, non-functional
     M_sum = []
@@ -52,7 +37,7 @@ def add_iterative(M1: M, M2: M) -> M:
     return M_sum
 
 
-def column(M1: M, c: int) -> M:
+def column(M1: M, c: int) -> Row:
     assert c <= len(M1[0])
     return [M1[i][c] for i in range(len(M1))]
 
@@ -88,22 +73,22 @@ def mult_strassen(M1: M, M2: M) -> M:
     A11, A12, A21, A22 = blocking(M1, b)
     B11, B12, B21, B22 = blocking(M2, b)
 
-    K1 = mult_strassen(add_iterative(A11, A22), add_iterative(B11, B22))
-    K2 = mult_strassen(add_iterative(A21, A22), B11)
-    K3 = mult_strassen(A11, add_iterative(B12, scalar_mult(B22, -1)))
-    K4 = mult_strassen(A22, add_iterative(B21, scalar_mult(B11, -1)))
-    K5 = mult_strassen(add_iterative(A11, A12), B22)
+    K1 = mult_strassen(add(A11, A22), add(B11, B22))
+    K2 = mult_strassen(add(A21, A22), B11)
+    K3 = mult_strassen(A11, add(B12, scalar_mult(B22, -1)))
+    K4 = mult_strassen(A22, add(B21, scalar_mult(B11, -1)))
+    K5 = mult_strassen(add(A11, A12), B22)
     K6 = mult_strassen(
-        add_iterative(A21, scalar_mult(A11, -1)), add_iterative(B11, B12)
+        add(A21, scalar_mult(A11, -1)), add(B11, B12)
     )
     K7 = mult_strassen(
-        add_iterative(A12, scalar_mult(A22, -1)), add_iterative(B21, B22)
+        add(A12, scalar_mult(A22, -1)), add(B21, B22)
     )
 
-    C11 = add_iterative(K1, add_iterative(K4, add_iterative(scalar_mult(K5, -1), K7)))
-    C12 = add_iterative(K3, K5)
-    C21 = add_iterative(K2, K4)
-    C22 = add_iterative(K1, add_iterative(scalar_mult(K2, -1), add_iterative(K3, K6)))
+    C11 = add(K1, add(K4, add(scalar_mult(K5, -1), K7)))
+    C12 = add(K3, K5)
+    C21 = add(K2, K4)
+    C22 = add(K1, add(scalar_mult(K2, -1), add(K3, K6)))
 
     C = []
     for block in [[C11, C12], [C21, C22]]:
@@ -120,7 +105,7 @@ def all_pivots_are_one(m: M) -> bool:
 
 def below_pivots_only_zeroes(m: M) -> bool:
     pivots_index = list(map(lambda t : t[0], get_pivots(m)))
-    for (i,c) in pivots_index:
+    for (i,c) in enumerate(pivots_index):
         if(sum(column(m, c)[i + 1:]) != 0) :
             return False
     return True
