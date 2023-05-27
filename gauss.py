@@ -5,6 +5,21 @@ from functools import reduce
 # TODO: Add step-by-step application of the elementary matrix stack for demonstration
 
 
+def gauss_split(m : M) -> M:
+    """
+    1. Establish a useful toprow by finding left-most pivot row.
+
+    """
+    nowrow = 0
+    # 1. Establish a useful toprow
+    ## Skip zero cols:
+    while is_nullrow(col(nowrow)):
+           nowrow += 1
+    if m[nowrow][0] == 0:
+        pass
+        #find_better_candidate
+    return
+
 def find_better_candidate(m : M, c: int, end_column: int, now_row: int) -> int:
     """
     Recursive function, going through the left-most non-zero column to find
@@ -14,10 +29,14 @@ def find_better_candidate(m : M, c: int, end_column: int, now_row: int) -> int:
     below it. Than we repeat the process with the inner matrix.
     """
     row_dim = len(m)
+
+    # There is no better candidate, current toprow is already best.
     if(c == end_column):
         return now_row
     
     col = column(m, c)
+
+    # The first row with a non-zero entry
     for s in range(now_row + 1, row_dim) :
         if col[s] != 0:
             return s
