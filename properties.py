@@ -28,7 +28,7 @@ def I(n: int) -> M:
 
 def is_identity_matrix(m: M) -> bool:
     """Tests if matrix m is identity matrix"""
-    return m == I(len(m)
+    return m == I(len(m))
 
 
 def show(m: M):
