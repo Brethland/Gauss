@@ -25,8 +25,27 @@ Concepts and Terminology relevant to our project.
 - row-echelon form: all 0-rows are at the bottom. 
 - reduced row-echelon form: all pivots are 1. Only zeroes below the pivot
 
+
+### Properties
+
 - rank
 - kernel
-- basis 
+- basis
+- span: 
+  - the span of two vectors is the set of all their linear combinations
+  - the span of a matrix is based on what? on the basis vectors?
+  - the cnocept of span takes into account, linear dependent vectors inside the matrix,
+  describing the space of the "useful" vectors only, disregarding redundant vectors, so to speak.
+  ich linearly independent vector (to all others in a matrix) adds a new dimension to be reached through linear combination of this vector together with the others.
+
+
+### Other stuff
+
+_linear_ transformations have two properties: 
+- all lines must remain lines
+- origin must be fixed in place
+
+- this keeps all parallel parallel
+- grid lines stay parallel and evenly spaced
 
 
