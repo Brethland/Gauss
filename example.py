@@ -18,16 +18,20 @@ Small_Matrix = [[1]]
 
 Big_Matrix = [list(uniform(0, 100) for i in range(100)) for j in range(100)]
 
+Bad_Matrix = [ [0] * 5, [1]*5, [0] * 5 ]
+
+gauss_algorithm_iterative(Bad_Matrix, True)
+
+
 
 Real_echelon, _, Elementary_trace = gauss_algorithm_iterative(Real_Matrix, True)
 show(Real_echelon)
 
-elementary_steps = list(reversed(Elementary_trace))
+elementary_steps = list(Elementary_trace)
 
 Result, next_steps = one_step(Real_Matrix, elementary_steps)
 
 show(Result)
-
 
 
 
