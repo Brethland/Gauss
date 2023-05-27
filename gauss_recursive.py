@@ -81,6 +81,6 @@ def gauss_rec_go(m: M):
     """run recursive gauss_split with initial values"""
     n_rows = len(m)
     n_cols = len(m[0])
-    if n_rows == 1 and n_coles == 1: return m
+    if n_rows == 1 and n_cols == 1: return m
     return gauss_rec(m, 0, 0, n_rows, n_cols, [], 0)
 
