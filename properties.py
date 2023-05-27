@@ -17,8 +17,8 @@ M = list[Row]
 def is_nullrow(row: Row) -> bool:
     for value in row:
         if value != 0:
-            return false
-    return true
+            return False
+    return True
 
 # duplicate to not introduce circular imports...
 def I(n: int) -> M:
