@@ -32,7 +32,8 @@ def is_identity_matrix(m: M) -> bool:
 
 
 def show(m: M):
-    print('\n'.join(['\t'.join([str(ele) for ele in row]) for row in m]))
+    isfloat = isinstance(m[0][0], float)
+    print('\n'.join(['\t'.join([f"{ele:.2f}" if isfloat else str(ele) for ele in row]) for row in m]))
 
     # 2 digits after floating point, only works for floating point though!
     #print('\n'.join(['\t'.join([f"{ele:.2f}" for ele in row]) for row in m]))
@@ -40,6 +41,7 @@ def show(m: M):
 
 def show_ident(m: M, indent: int):
     indentation = '\t' * indent
+    isfloat = isinstance(m[0][0], float)
     for row in m:
         print(indentation, end='')
-        print('\t'.join([str(elem) for elem in row]))
+        print('\t'.join([f"{elem:.2f}" if isfloat else str(elem) for elem in row]))
