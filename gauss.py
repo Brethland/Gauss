@@ -6,6 +6,13 @@ from functools import reduce
 
 
 def find_better_candidate(m : M, c: int, end_column: int, now_row: int) -> int:
+    """
+    Recursive function, going through the left-most non-zero column to find
+    the best candidate as a first_row, that is one row with left-most pivot.
+
+    We will start outside in, to find the left-most pivot, creating zeroes
+    below it. Than we repeat the process with the inner matrix.
+    """
     row_dim = len(m)
     if(c == end_column):
         return now_row
@@ -102,6 +109,13 @@ def inverse(m: M) -> M:
 # show(inverse([[1, 1, 0], [0, 1, 1], [1, 1, 1]]))
 
 def one_step(m: M, t: list[M]) -> tuple[M, list[M]]:
+    """
+    Takes inverted list of elementary matrices, pops the first matrix
+    to apply and returns the transformed matrix as well as the remaining
+    elementary matrices.
+
+    Thus this performs a single action of Gauss elimination.
+    """
     assert(len(t) > 0)
     m = mult(t[0], m)
     show(m)
