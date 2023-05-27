@@ -38,10 +38,12 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack) 
             stack.append(elem_swap)
         m = mult(elem_swap, m)
         #show(elem_swap)
-    if trace:
-        #print(f"Swapped with good pivot row (using: S({n_rows}, {nowrow}, {find_pivot_row_index(column(m, nowcol))}))")
-        print(f"Swapped row {nowrow} with good pivot row {find_pivot_row_index(column(m, nowcol))}")
-        show(m)
+        if trace:
+            #print(f"Swapped with good pivot row (using: S({n_rows}, {nowrow}, {find_pivot_row_index(column(m, nowcol))}))")
+            print(f"Swapped row {nowrow + 1} with good pivot row {find_pivot_row_index(column(m, nowcol)) + 1}")
+            show(m)
+    elif trace:
+        print("No need to swap rows. Current pivot is fine\n")
     
 
     pivot = m[nowrow][nowcol]
@@ -61,7 +63,7 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack) 
         m = mult(elem_add, m)
         if trace:
             #print(f"Created 0 below pivot (using A({n_rows}, {rowindex}, {nowrow}, {inv_scalar}))")
-            print(f"Created 0 below pivot in row {rowindex} by adding {inv_scalar} * row {nowrow} to it.")
+            print(f"Created 0 below pivot in row {rowindex + 1} by adding {inv_scalar} * row {nowrow + 1} to it.")
             show(m)
 
 
