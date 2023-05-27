@@ -14,7 +14,7 @@ Row = list[F]
 M = list[Row]
 
 
-def is_nullrow(row: R) -> bool:
+def is_nullrow(row: Row) -> bool:
     for value in row:
         if value != 0:
             return false
