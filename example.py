@@ -16,6 +16,8 @@ Real_Matrix = [
 
 Small_Matrix = [[1]]
 
+Zero_Matrix = [ [0,0,0], [0,0,0] ]
+
 Big_Matrix = [list(uniform(0, 100) for i in range(100)) for j in range(100)]
 
 Bad_Matrix = [ [0] * 5, [1]*5, [0] * 5 ]
@@ -53,5 +55,14 @@ while True:
 # Use recursive implementation of gauss
 from gauss_recursive import *
 
-gauss_rec_go(Good_Matrix)
-#gauss_rec_go(Bad_Matrix)
+Result, elementary_steps = gauss_rec_go(Good_Matrix)
+steps = StepByStep(Good_Matrix, elementary_steps)
+while True:
+    try: next(steps)
+    except: break
+gauss_rec_go(Real_Matrix)
+#print(gauss_rec_go(Small_Matrix))
+#gauss_rec_go(Big_Matrix)
+gauss_rec_go(Bad_Matrix)
+#print(gauss_rec_go(Zero_Matrix))
+gauss_rec_go(Bad_Matrix)

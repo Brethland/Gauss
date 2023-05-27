@@ -11,12 +11,18 @@ def find_pivot_row_index(column: Row) -> int:
             i += 1
             continue
 
-def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack, depth: int) -> M:
+def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack, depth: int) -> tuple[M, list[M]]:
     """
-    lastrow holds index of last nonzero-row.
+    Recursive implementation of gauss elimination.
 
-    # NOT necessary. 0. Put all nullrows to the bottom
-    1. Establish a useful toprow by finding left-most pivot row. Swap if necessary
+    1. Establish a useful toprow by finding left-most pivot row. Skip zero columns and swap rows if necessary.
+    1.1 As long as zero-column, increment nowcol
+    1.2 Current nowcol is guaranteed to have a non-zero entry in some row. (as it's not a zero column)
+    2. Create zeroes below the pivot
+    3. Solve recursively for m with `nowrow - 1` and `nowcol - 1`
+
+    Prints the transformed matrices for each step, with a natural language description and returns
+    the accumulated list of elementary_matrices.
 
     """
     # TODO: check if stack works like that
@@ -26,10 +32,14 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack, 
 
     print(f"\n{indentation}Working on matrix of size {n_rows - nowrow} x {n_cols - nowcol}")
 
+    # Base case of recursion
     if nowrow == n_rows - 1:
         return m, stack
+
+
     
     # 1. Skip any zero columns
+    # TODO: Optimization potential: Checking if nullrow can fail by returning the index of nonzero row for that column
     while is_nullrow(column(m, nowcol)):
         print(f"\n{indentation}Skipping at least one zero-column...")
         nowcol += 1
@@ -82,5 +92,6 @@ def gauss_rec_go(m: M):
     n_rows = len(m)
     n_cols = len(m[0])
     if n_rows == 1 and n_cols == 1: return m
+    if m == [ [0] * n_cols] * n_rows: return m
     return gauss_rec(m, 0, 0, n_rows, n_cols, [], 0)
 
