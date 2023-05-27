@@ -33,3 +33,7 @@ def is_identity_matrix(m: M) -> bool:
 
 def show(m: M):
     print('\n'.join(['\t'.join([str(ele) for ele in row]) for row in m]))
+
+    # 2 digits after floating point, only works for floating point though!
+    #print('\n'.join(['\t'.join([f"{ele:.2f}" for ele in row]) for row in m]))
+    print()
