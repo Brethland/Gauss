@@ -20,6 +20,10 @@ Big_Matrix = [list(uniform(0, 100) for i in range(100)) for j in range(100)]
 
 Bad_Matrix = [ [0] * 5, [1]*5, [0] * 5 ]
 
+Good_Matrix = [ [0.0,2.0,3.0],
+                [2.0,3.0,4.0],
+                [6.0,4.0,1.0]]
+
 gauss_algorithm_iterative(Bad_Matrix, True)
 
 
@@ -39,7 +43,15 @@ print("----")
 
 steps = StepByStep(Real_Matrix, elementary_steps)
 
-next(steps)
-next(steps)
-next(steps)
-next(steps)
+while True:
+    try:
+        next(steps)
+    except:
+        break
+
+
+# Use recursive implementation of gauss
+from gauss_recursive import *
+
+gauss_rec_go(Good_Matrix)
+#gauss_rec_go(Bad_Matrix)

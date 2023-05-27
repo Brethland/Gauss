@@ -37,3 +37,9 @@ def show(m: M):
     # 2 digits after floating point, only works for floating point though!
     #print('\n'.join(['\t'.join([f"{ele:.2f}" for ele in row]) for row in m]))
     print()
+
+def show_ident(m: M, indent: int):
+    indentation = '\t' * indent
+    for row in m:
+        print(indentation, end='')
+        print('\t'.join([str(elem) for elem in row]))

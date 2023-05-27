@@ -11,7 +11,7 @@ def find_pivot_row_index(column: Row) -> int:
             i += 1
             continue
 
-def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack) -> M:
+def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack, depth: int) -> M:
     """
     lastrow holds index of last nonzero-row.
 
@@ -22,13 +22,19 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack) 
     # TODO: check if stack works like that
     # TODO: consider renaming "nowrow" to "toprow"
 
-    #if is_nullrow(m[nowrow])  # if first row is null row this exits right away.
+    indentation = '\t' * depth
+
+    print(f"\n{indentation}Working on matrix of size {n_rows - nowrow} x {n_cols - nowcol}")
+
     if nowrow == n_rows - 1:
         return m, stack
     
     # 1. Skip any zero columns
     while is_nullrow(column(m, nowcol)):
-           nowcol += 1
+        print(f"\n{indentation}Skipping at least one zero-column...")
+        nowcol += 1
+
+    print(f"\n{indentation}-- Establish a useful toprow --")
 
     # 2. Establish a useful toprow, swap if necessary. column(m, nowcol) is guaranteed to have a pivotrow
     pivot = m[nowrow][nowcol]
@@ -40,15 +46,16 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack) 
         #show(elem_swap)
         if trace:
             #print(f"Swapped with good pivot row (using: S({n_rows}, {nowrow}, {find_pivot_row_index(column(m, nowcol))}))")
-            print(f"Swapped row {nowrow + 1} with good pivot row {find_pivot_row_index(column(m, nowcol)) + 1}")
-            show(m)
+            print(f"\n{indentation}Swapped row {nowrow + 1} with good pivot row {find_pivot_row_index(column(m, nowcol)) + 1}\n")
+            show_ident(m, depth)
     elif trace:
-        print("No need to swap rows. Current pivot is fine\n")
+        print(f"\n{indentation}No need to swap rows. Current pivot is fine\n")
     
 
     pivot = m[nowrow][nowcol]
     assert pivot != 0
 
+    print(f"\n{indentation}-- Create zeroes below the pivot --")
     # 3. Create zeroes below the pivot
     for rowindex in range(nowrow+1, n_rows): # TODO: create correct range definition!
     #for rowindex in range(1, n_rows - nowrow): # TODO: check range for recursive calls! Yep, there was a off-by-one bug
@@ -63,14 +70,14 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack) 
         m = mult(elem_add, m)
         if trace:
             #print(f"Created 0 below pivot (using A({n_rows}, {rowindex}, {nowrow}, {inv_scalar}))")
-            print(f"Created 0 below pivot in row {rowindex + 1} by adding {inv_scalar} * row {nowrow + 1} to it.")
-            show(m)
+            print(f"\n{indentation}Created 0 below pivot in row {rowindex + 1} by adding {inv_scalar} * row {nowrow + 1} to it.\n")
+            show_ident(m, depth)
 
 
-    return gauss_rec(m, nowrow + 1, nowcol + 1, n_rows, n_cols, stack)
+    return gauss_rec(m, nowrow + 1, nowcol + 1, n_rows, n_cols, stack, depth+1)
     
 
 def gauss_rec_go(m: M):
     """run recursive gauss_split with initial values"""
-    return gauss_rec(m, 0, 0, len(m), len(m[0]), [])
+    return gauss_rec(m, 0, 0, len(m), len(m[0]), [], 0)
 

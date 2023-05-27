@@ -2,6 +2,7 @@ from properties import *
 from itertools import chain
 
 def get_pivot(row: Row) -> tuple[int | None, F | None]:
+    # TODO: this doc-string is not uptodate
     """Return the pivot_index of a row along with the column index received."""
     pivot_index = 0
     for val in row:
