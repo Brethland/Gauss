@@ -1,9 +1,5 @@
 from algebra import *
-from elementary_matrix import *
 from functools import reduce
-
-# TODO: Add step-by-step application of the elementary matrix stack for demonstration
-
 
 def find_better_candidate(m : M, c: int, end_column: int, now_row: int) -> int:
     """
@@ -110,31 +106,3 @@ def inverse(m: M) -> M:
     # else:
     return reduce(mult, trace, I(rank))
 
-def one_step(m: M, t: list[M]) -> tuple[M, list[M]]:
-    """
-    Takes inverted list of elementary matrices, pops the first matrix
-    to apply and returns the transformed matrix as well as the remaining
-    elementary matrices.
-
-    Thus this performs a single action of Gauss elimination.
-    """
-    assert(len(t) > 0)
-    m = mult(t[0], m)
-    show(m)
-    return (m, t[1:])
-
-
-class StepByStep:
-    """A class containing matrix and a stack of elementary operations,
-    applying them one by one"""
-    def __init__(self, matrix, stack):
-        self.matrix = matrix
-        self.elementary_stack = stack
-    def __next__(self):
-        if len(self.matrix) == 0:
-            print()
-        else:
-            self.matrix = mult(self.elementary_stack[0], self.matrix)
-            show(self.matrix)
-            self.elementary_stack = self.elementary_stack[1:]
-        return self.matrix
