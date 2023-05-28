@@ -21,16 +21,14 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack, 
     2. Create zeroes below the pivot
     3. Solve recursively for m with `nowrow - 1` and `nowcol - 1`
 
-    Prints the transformed matrices for each step, with a natural language description and returns
-    the accumulated list of elementary_matrices.
+    Prints the transformed matrices for each step, with a natural language description and
+    returns the accumulated list of elementary_matrices.
 
     """
-    # TODO: check if stack works like that
-    # TODO: consider renaming "nowrow" to "toprow"
 
     indentation = '\t' * depth
 
-    print(f"\n{indentation}Working on matrix of size {n_rows - nowrow} x {n_cols - nowcol}")
+    if trace: print(f"\n{indentation}Working on matrix of size {n_rows - nowrow} x {n_cols - nowcol}")
 
     # Base case of recursion
     if nowrow == n_rows - 1:
@@ -41,10 +39,10 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack, 
     # 1. Skip any zero columns
     # TODO: Optimization potential: Checking if nullrow can fail by returning the index of nonzero row for that column
     while is_nullrow(column(m, nowcol)):
-        print(f"\n{indentation}Skipping at least one zero-column...")
+        if trace: print(f"\n{indentation}Skipping at least one zero-column...")
         nowcol += 1
 
-    print(f"\n{indentation}-- Establish a useful toprow --")
+    if trace: print(f"\n{indentation}-- Establish a useful toprow --")
 
     # 2. Establish a useful toprow, swap if necessary. column(m, nowcol) is guaranteed to have a pivotrow
     pivot = m[nowrow][nowcol]
@@ -65,7 +63,9 @@ def gauss_rec(m : M, nowrow: int, nowcol: int, n_rows: int, n_cols: int, stack, 
     pivot = m[nowrow][nowcol]
     assert pivot != 0
 
-    print(f"\n{indentation}-- Create zeroes below the pivot --")
+    # TODO: normalize toprow by dividing by it's pivot simplifying the computation of inv_scalar. Leads to reduced row echelon form
+
+    if trace: print(f"\n{indentation}-- Create zeroes below the pivot --")
     # 3. Create zeroes below the pivot
     for rowindex in range(nowrow+1, n_rows): # TODO: create correct range definition!
     #for rowindex in range(1, n_rows - nowrow): # TODO: check range for recursive calls! Yep, there was a off-by-one bug
