@@ -143,7 +143,6 @@ def all_pivots_are_one(m: M) -> bool:
     else:
         return False
 
-
 def below_pivots_only_zeroes(m: M) -> bool:
     pivots_index = list(map(lambda t: t[0], get_pivots(m)))
     for i, c in enumerate(pivots_index):
@@ -151,10 +150,20 @@ def below_pivots_only_zeroes(m: M) -> bool:
             return False
     return True
 
+def above_pivots_only_zeroes(m : M) -> bool:
+    pivots_index = list(map(lambda t: t[0], get_pivots(m)))
+    for i, c in enumerate(pivots_index):
+        if sum(column(m, c)[:i]) != 0:
+            return False
+    return True
 
 def is_row_echelon_form(m: M) -> bool:
-    """Function to check if Matrix m is in row_echelon_form."""
-    return all_pivots_are_one(m) and below_pivots_only_zeroes(m)
+    """Function to check if Matrix m is in row echelon form."""
+    return below_pivots_only_zeroes(m)
+
+def is_reduced_echelon_form(m : M) -> bool:
+    """Function to check if Matrix m is in reduced row echelon form."""
+    return is_row_echelon_form(m) and all_pivots_are_one(m) and above_pivots_only_zeroes(m)
 
 
 ### Helpers
@@ -190,7 +199,7 @@ class StepByStep:
 
     def __init__(self, matrix, stack):
         self.matrix = matrix
-        self.elementary_stack = stack
+        self.elementary_stack = filter(not is_identity_matrix, stack) #identity means useless operations
 
     def __next__(self):
         if len(self.matrix) == 0:
