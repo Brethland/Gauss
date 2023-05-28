@@ -10,7 +10,7 @@ elementary matrices.
 property functions to check for interesting properties
 whether or not they hold.
 
-helper functions (like show) to display our matrices.
+helper functions (like show or step-by-step application) to display our matrices.
 
 """
 
@@ -31,8 +31,7 @@ M = list[R]  # Matrix is a list of list of ints. This is a list of rows.
 
 
 def get_pivot(row: R) -> tuple[int | None, F | None]:
-    # TODO: this doc-string is not uptodate
-    """Return the pivot_index of a row along with the column index received."""
+    """If the row is not a zero-row, this returns the pivot index (column) as well as its value."""
     pivot_index = 0
     for val in row:
         if val == 0:
