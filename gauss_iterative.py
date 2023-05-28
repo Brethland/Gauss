@@ -8,8 +8,9 @@ def find_better_candidate(m: M, c: int, end_column: int, now_row: int) -> int:
     the best candidate as a first_row, that is one row with left-most pivot.
 
     We will start outside in, to find the left-most pivot, creating zeroes
-    below it. Than we repeat the process with the inner matrix.
+    below it. Then we repeat the process with the inner matrix.
     """
+
     row_dim = len(m)
 
     # There is no better candidate, current toprow is already best.
@@ -28,11 +29,12 @@ def find_better_candidate(m: M, c: int, end_column: int, now_row: int) -> int:
 def gauss_algorithm_iterative(m: M, is_traced=False) -> tuple[M, int, list[M]]:
     """
     Perform Gauss algorithm (iterative)
-    1. Get most-left column with non-zero values (find best row for first column, otherwise remove this column
+    1. Get most-left column with non-zero values (find best row for first column, otherwise ignore this column by increasing now_column
     2. If the top-row value is zero --> SWAP R0 with last non-zero row (or put to bottom using nullrow_cnt)
-    3. Normalize row 0, making the pivot 1. (not necessary)
-    4. Make zeroes below the pivot (by adding the respective inverse multiple
-    5. Perform 1-4 with remaining rows.
+    3. Make zeroes below the pivot (by adding the respective inverse multiple)
+    4. Perform 1-3 with remaining rows.
+
+    It returns the reduced matrix(in echelon form), the rank and the trace of operations
     """
 
     nullrow_cnt = 0
@@ -77,18 +79,28 @@ def gauss_algorithm_iterative(m: M, is_traced=False) -> tuple[M, int, list[M]]:
 
 
 def normalize(m: M, is_traced=False) -> tuple[M, int, list[M]]:
+    """
+    Normalize makes the matrix into a reduced echelon matrix.
+    It applies the gauss algorithm first, then it goes from bottom(non-zero row) to top with following steps:
+    1. Normalize the pivot element of this row into 1
+    2. Make the element above the pivot zero by adding the respective additive inverse.
+    3. Repeat 1-2 on the above row till the first row.
+
+    It returns a tuple with reduced matrix, the rank of the matrix and trace of operations
+    """
+
     row_dim = len(m)
     (m, rank, trace) = gauss_algorithm_iterative(m, is_traced)
-    pivots = get_pivots(m)
+    pivots = get_pivots(m) #get all pivots to make it faster later
     for k in range(rank):
-        mul = M(row_dim, rank - k - 1, 1 / pivots[rank - k - 1][1])
+        mul = M(row_dim, rank - k - 1, 1 / pivots[rank - k - 1][1]) #normalizing
         if is_traced:
             trace.append(mul)
         m = mult(mul, m)
-        col_index = pivots[rank - k - 1][0]
+        col_index = pivots[rank - k - 1][0] #the column above this pivot should be cleared
         for r in range(rank - k - 1):
             if -m[r][col_index] < 0 or -m[r][col_index] > 0:
-                addition = A(row_dim, r, rank - k - 1, -m[r][col_index])
+                addition = A(row_dim, r, rank - k - 1, -m[r][col_index]) #make the element zero
                 if is_traced:
                     trace.append(addition)
                 m = mult(addition, m)
@@ -97,21 +109,13 @@ def normalize(m: M, is_traced=False) -> tuple[M, int, list[M]]:
     else:
         return (m, rank, [])
 
-
-def echelon_form(m: M) -> M:
-    return gauss_algorithm_iterative(m)[0]
-
-
-def rank(m: M) -> int:
-    return gauss_algorithm_iterative(m)[1]
-
-
-def reduced_echelon_form(m: M) -> M:
-    return normalize(m)[0]
-
-
 def inverse(m: M) -> M:
+    """
+    We can compute the inverse of an invertible matrix by simply
+    multipling all elementary matrices together.
+    """
+
     (id, rank, trace) = normalize(m, True)
-    assert rank == len(m)
-    trace.reverse()
+    assert rank == len(m) # if it's invertible
+    trace.reverse() # matrix multiplication is not commutativ!
     return reduce(mult, trace, I(rank))

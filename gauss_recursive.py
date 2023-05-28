@@ -64,7 +64,7 @@ def gauss_rec(
             print(
                 f"\n{indentation}Swapped row {nowrow + 1} with good pivot row {find_pivot_row_index(column(m, nowcol)) + 1}\n"
             )
-            show_ident(m, depth)
+            show_indent(m, depth)
     elif trace:
         print(f"\n{indentation}No need to swap rows. Current pivot is fine\n")
 
@@ -93,7 +93,7 @@ def gauss_rec(
             print(
                 f"\n{indentation}Created 0 below pivot in row {rowindex + 1} by adding {inv_scalar} * row {nowrow + 1} to it.\n"
             )
-            show_ident(m, depth)
+            show_indent(m, depth)
 
     return gauss_rec(m, nowrow + 1, nowcol + 1, n_rows, n_cols, stack, depth + 1)
 

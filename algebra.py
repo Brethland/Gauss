@@ -20,7 +20,6 @@ from fractions import Fraction
 # Custom data types:
 
 # Supported fields are now \QQ and \RR
-# TODO: Add an inclusion of \ZZ into \QQ so that it's mathematically correct
 F = Fraction | float | int
 
 R = list[F]
@@ -43,18 +42,17 @@ def get_pivot(row: R) -> tuple[int | None, F | None]:
 
 
 def get_pivots(m: M) -> list[tuple[int | None, F | None]]:
+    """Get all pivots by mapping the matrix with row action `get_pivot`"""
     return list(map(lambda row: get_pivot(row), m))
 
 
 def scalar_mult(M1: M, k: F) -> M:
     """return k*m as scalar multiplication on matrix, k is from a field"""
-
     return [list(map(lambda t: k * t, M1[i])) for i in range(len(M1))]
 
 
 def add(M1: M, M2: M) -> M:
     """element-wise addition of two matrices. naive iterative way."""
-
     assert len(M1) == len(M2) and len(M1[0]) == len(M2[0])  # extract to properties.py
 
     # element-wise addition, non-functional
@@ -68,12 +66,13 @@ def add(M1: M, M2: M) -> M:
 
 
 def column(M1: M, c: int) -> R:
+    """get the cth-column of the matrix"""
     assert c <= len(M1[0])
     return [M1[i][c] for i in range(len(M1))]
 
 
 def mult(M1: M, M2: M) -> M:
-    """matrix multiplication, using naive method"""
+    """matrix multiplication, using naive method(O(n^3}))"""
 
     assert len(M1[0]) == len(M2)
     if is_identity_matrix(M2):
@@ -162,7 +161,9 @@ def is_row_echelon_form(m: M) -> bool:
 
 
 def show(m: M):
+    """Pretty Print for Matrices"""
     isfloat = isinstance(m[0][0], float)
+    # 2 digits after floating point, only works for floating point though!
     print(
         "\n".join(
             [
@@ -171,32 +172,16 @@ def show(m: M):
             ]
         )
     )
-
-    # 2 digits after floating point, only works for floating point though!
-    # print('\n'.join(['\t'.join([f"{ele:.2f}" for ele in row]) for row in m]))
     print()
 
 
-def show_ident(m: M, indent: int):
+def show_indent(m: M, indent: int):
+    """Pretty Print with the respective indentation"""
     indentation = "\t" * indent
     isfloat = isinstance(m[0][0], float)
     for row in m:
         print(indentation, end="")
         print("\t".join([f"{elem:.2f}" if isfloat else str(elem) for elem in row]))
-
-
-def one_step(m: M, t: list[M]) -> tuple[M, list[M]]:
-    """
-    Takes inverted list of elementary matrices, pops the first matrix
-    to apply and returns the transformed matrix as well as the remaining
-    elementary matrices.
-
-    Thus this performs a single action of Gauss elimination.
-    """
-    assert len(t) > 0
-    m = mult(t[0], m)
-    show(m)
-    return (m, t[1:])
 
 
 class StepByStep:
