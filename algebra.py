@@ -9,10 +9,10 @@ from fractions import Fraction
 #TODO: Add an inclusion of \ZZ into \QQ so that it's mathematically correct
 F = Fraction | float | int 
 
-Row = list[F]
+R = list[F]
 
 # Matrix is a list of list of ints. This is a list of rows.
-M = list[Row]
+M = list[R]
 
 ### Elementary Matrices
 
@@ -49,7 +49,7 @@ def A(n: int, r1: int, r2: int, a: F) -> M:
 
 ### Properties
 
-def is_nullrow(row: Row) -> bool:
+def is_nullrow(row: R) -> bool:
     for value in row:
         if value != 0:
             return False
@@ -81,7 +81,7 @@ def show_ident(m: M, indent: int):
         print(indentation, end='')
         print('\t'.join([f"{elem:.2f}" if isfloat else str(elem) for elem in row]))
 
-def get_pivot(row: Row) -> tuple[int | None, F | None]:
+def get_pivot(row: R) -> tuple[int | None, F | None]:
     # TODO: this doc-string is not uptodate
     """Return the pivot_index of a row along with the column index received."""
     pivot_index = 0
@@ -117,7 +117,7 @@ def add(M1: M, M2: M) -> M:
     return M_sum
 
 
-def column(M1: M, c: int) -> Row:
+def column(M1: M, c: int) -> R:
     assert c <= len(M1[0])
     return [M1[i][c] for i in range(len(M1))]
 

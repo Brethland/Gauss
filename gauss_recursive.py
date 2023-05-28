@@ -2,7 +2,7 @@ from gauss import *
 
 trace = True
 
-def find_pivot_row_index(column: Row) -> int:
+def find_pivot_row_index(column: R) -> int:
     """ Assuming `column` contains a non-zero value, find it's (row) index"""
     for i in range(len(column)):
         if column[i] != 0:
