@@ -1,4 +1,4 @@
-from gauss import *
+from algebra import *
 
 trace = True
 

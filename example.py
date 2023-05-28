@@ -1,4 +1,6 @@
-from gauss import *
+from algebra import *
+from gauss_recursive import *
+from gauss_iterative import *
 from random import uniform
 
 Rational_Matrix = [
