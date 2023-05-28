@@ -35,15 +35,13 @@ Mathematical properties and how we check them.
 
 ## Todo
 
-- [ ] Problem description
-- [ ] Implementation
-  - [ ] import?
-- [ ] Documentation
-- [ ] pretty print?
+- [x] Problem description
+- [x] Implementation
+- [x] Documentation
+- [x] Pretty Print
 - [ ] Presentation (notebook)
   - [ ] Finish
   - [ ] Upload
-- [ ] TODO: Refactor naming "Row" type just "R" (as with M and F)
 
 
 ## Presentation Outline:

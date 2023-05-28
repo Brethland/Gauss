@@ -114,7 +114,4 @@ def inverse(m: M) -> M:
     (id, rank, trace) = normalize(m, True)
     assert rank == len(m)
     trace.reverse()
-    # if(rank != 1 and (rank & (rank - 1) != 0)):
-    #     return reduce(mult_strassen, trace, I(rank))
-    # else:
     return reduce(mult, trace, I(rank))
