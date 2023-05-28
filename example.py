@@ -5,29 +5,22 @@ Rational_Matrix = [
     [Fraction(2, 1), Fraction(1, 1), Fraction(0, 1), Fraction(0, 1)],
     [Fraction(3, 1), Fraction(5, 1), Fraction(-1, 1), Fraction(-3, 1)],
     [Fraction(0, 1), Fraction(3, 1), Fraction(-1, 1), Fraction(0, 1)],
-    [Fraction(1, 1), Fraction(4, 1), Fraction(0, 1), Fraction(-2, 1)]
+    [Fraction(1, 1), Fraction(4, 1), Fraction(0, 1), Fraction(-2, 1)],
 ]
 
-Real_Matrix = [
-    [3.5, -2.0, 1.0],
-    [-3.1, 5,6, 0.0],
-    [4.7, 0.0, -1.3]
-]
+Real_Matrix = [[3.5, -2.0, 1.0], [-3.1, 5, 6, 0.0], [4.7, 0.0, -1.3]]
 
 Small_Matrix = [[1]]
 
-Zero_Matrix = [ [0,0,0], [0,0,0] ]
+Zero_Matrix = [[0, 0, 0], [0, 0, 0]]
 
 Big_Matrix = [list(uniform(0, 100) for i in range(100)) for j in range(100)]
 
-Bad_Matrix = [ [0] * 5, [1]*5, [0] * 5 ]
+Bad_Matrix = [[0] * 5, [1] * 5, [0] * 5]
 
-Good_Matrix = [ [0.0,2.0,3.0],
-                [2.0,3.0,4.0],
-                [6.0,4.0,1.0]]
+Good_Matrix = [[0.0, 2.0, 3.0], [2.0, 3.0, 4.0], [6.0, 4.0, 1.0]]
 
 gauss_algorithm_iterative(Bad_Matrix, True)
-
 
 
 Real_echelon, _, Elementary_trace = gauss_algorithm_iterative(Real_Matrix, True)
@@ -38,7 +31,6 @@ elementary_steps = list(Elementary_trace)
 Result, next_steps = one_step(Real_Matrix, elementary_steps)
 
 show(Result)
-
 
 
 print("----")
@@ -58,11 +50,13 @@ from gauss_recursive import *
 Result, elementary_steps = gauss_rec_go(Good_Matrix)
 steps = StepByStep(Good_Matrix, elementary_steps)
 while True:
-    try: next(steps)
-    except: break
+    try:
+        next(steps)
+    except:
+        break
 gauss_rec_go(Real_Matrix)
-#print(gauss_rec_go(Small_Matrix))
-#gauss_rec_go(Big_Matrix)
+# print(gauss_rec_go(Small_Matrix))
+# gauss_rec_go(Big_Matrix)
 gauss_rec_go(Bad_Matrix)
-#print(gauss_rec_go(Zero_Matrix))
+# print(gauss_rec_go(Zero_Matrix))
 gauss_rec_go(Bad_Matrix)
