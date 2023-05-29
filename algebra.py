@@ -199,7 +199,8 @@ class StepByStep:
 
     def __init__(self, matrix, stack):
         self.matrix = matrix
-        self.elementary_stack = filter(not is_identity_matrix, stack) #identity means useless operations
+        # BUG>: not possible syntax in python (negating filter function)
+        self.elementary_stack = list(filter(lambda x: not is_identity_matrix(x), stack)) #identity means useless operations
 
     def __next__(self):
         if len(self.matrix) == 0:
