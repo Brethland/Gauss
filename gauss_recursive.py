@@ -43,7 +43,7 @@ def gauss_rec(
 
     # 1. Skip any zero columns
     # TODO: Optimization potential: Checking if nullrow can fail by returning the index of nonzero row for that column
-    # < or <= ?
+    # TODO: < or <= ?  did this fix the bug, or was the bug somewhere else. what actually was the bug?
     while nowcol < n_cols and is_nullrow(column(m[nowrow:], nowcol)):
         if trace:
             print(f"\n{indentation}Skipping at least one zero-column...")
