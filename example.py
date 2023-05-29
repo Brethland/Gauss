@@ -1,5 +1,7 @@
 from fractions import Fraction
 from random import uniform
+from gauss_recursive import *
+from algebra import *
 
 Rational_Matrix = [
     [Fraction(2, 1), Fraction(1, 1), Fraction(0, 1), Fraction(0, 1)],
@@ -19,3 +21,5 @@ Big_Matrix = [list(uniform(0, 100) for i in range(100)) for j in range(100)]
 Bad_Matrix = [[0] * 5, [1] * 5, [0] * 5]
 
 Good_Matrix = [[0.0, 2.0, 3.0], [2.0, 3.0, 4.0], [6.0, 4.0, 1.0]]
+
+Demo_Matrix = [[4, 1, 2, 3], [2, 0.5, 1, -2], [0, 3, 0, 2], [4, -2, -1, 3]]

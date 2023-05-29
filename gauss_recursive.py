@@ -54,7 +54,8 @@ def gauss_rec(
     # 2. Establish a useful toprow, swap if necessary. column(m, nowcol) is guaranteed to have a pivotrow
     pivot = m[nowrow][nowcol]
     if pivot == 0:
-        elem_swap = S(n_rows, nowrow, find_pivot_row_index(column(m[nowrow+1:], nowcol))) # FIXME: add nowrow offset back in?!
+        better_row = find_pivot_row_index(column(m[nowrow + 1:], nowcol)) + nowrow + 1
+        elem_swap = S(n_rows, nowrow, better_row)
         if trace:
             stack.append(elem_swap)
         m = mult(elem_swap, m)
@@ -62,7 +63,7 @@ def gauss_rec(
         if trace:
             # print(f"Swapped with good pivot row (using: S({n_rows}, {nowrow}, {find_pivot_row_index(column(m, nowcol))}))")
             print(
-                    f"\n{indentation}Swapped row {nowrow + 1} with good pivot row {find_pivot_row_index(column(m[nowrow+1:], nowcol)) + 1}\n"
+                    f"\n{indentation}Swapped row {nowrow + 1} with good pivot row {better_row + 1}\n"
             )
             show_indent(m, depth)
     elif trace:
