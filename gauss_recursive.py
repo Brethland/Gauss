@@ -43,7 +43,7 @@ def gauss_rec(
 
     # 1. Skip any zero columns
     # TODO: Optimization potential: Checking if nullrow can fail by returning the index of nonzero row for that column
-    while is_nullrow(column(m[nowrow:][nowcol:], nowcol)):
+    while is_nullrow(column(m[nowrow:][nowcol:], 0)):
         if trace:
             print(f"\n{indentation}Skipping at least one zero-column...")
         nowcol += 1
