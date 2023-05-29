@@ -116,6 +116,7 @@ def inverse(m: M) -> M:
     """
 
     (id, rank, trace) = normalize(m, True)
+    assert len(m) == len(m[0]) #if it's a square matrix
     assert rank == len(m) # if it's invertible
     trace.reverse() # matrix multiplication is not commutativ!
     return reduce(mult, trace, I(rank))
