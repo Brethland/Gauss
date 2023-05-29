@@ -59,9 +59,8 @@ def gauss_rec(
         if trace:
             stack.append(elem_swap)
         m = mult(elem_swap, m)
-        # show(elem_swap)
         if trace:
-            # print(f"Swapped with good pivot row (using: S({n_rows}, {nowrow}, {find_pivot_row_index(column(m, nowcol))}))")
+            # print(f"Swapped with good pivot row (using: S({n_rows}, {nowrow}, {find_pivot_row_index(column(m[nowrow + 1:], nowcol))}) + nowrow + 1)")
             print(
                     f"\n{indentation}Swapped row {nowrow + 1} with good pivot row {better_row + 1}\n"
             )
@@ -72,7 +71,7 @@ def gauss_rec(
     pivot = m[nowrow][nowcol]
     assert pivot != 0
 
-    # TODO: normalize toprow by dividing by it's pivot simplifying the computation of inv_scalar. Leads to reduced row echelon form
+    # TODO: normalize toprow by dividing by it's pivot simplifying the computation of inv_scalar. Leads to reduced row echelon form?!
 
     if trace:
         print(f"\n{indentation}-- Create zeroes below the pivot --")
@@ -82,15 +81,12 @@ def gauss_rec(
         if m[rowindex][nowcol] == 0:
             continue  # entry below pivot is already 0
         else:
-            # list(map(show, stack))
             inv_scalar = -(m[rowindex][nowcol] / pivot)
             elem_add = A(n_rows, rowindex, nowrow, inv_scalar)
-        # TODO: Collect all elementary matrices, reduce them, then apply to m.
         if trace:
             stack.append(elem_add)
         m = mult(elem_add, m)
         if trace:
-            # print(f"Created 0 below pivot (using A({n_rows}, {rowindex}, {nowrow}, {inv_scalar}))")
             print(
                 f"\n{indentation}Created 0 below pivot in row {rowindex + 1} by adding {inv_scalar} * row {nowrow + 1} to it.\n"
             )
@@ -112,5 +108,5 @@ def gauss_rec_go(m: M):
     return gauss_rec(m, 0, 0, n_rows, n_cols, [], 0)
 
 if __name__ == '__main__':
-    from example import *
+    from example import Good_Matrix, Demo_Matrix
     gauss_rec_go(Good_Matrix)
