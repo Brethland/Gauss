@@ -107,3 +107,8 @@ def gauss_rec_go(m: M):
     if m == [[0] * n_cols] * n_rows:
         return m
     return gauss_rec(m, 0, 0, n_rows, n_cols, [], 0)
+
+if __name__ == '__main__':
+    from example import *
+    gauss_rec_go(Good_Matrix)
+
