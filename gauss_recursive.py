@@ -38,7 +38,7 @@ def gauss_rec(
         )
 
     # Base case of recursion
-    if nowrow == n_rows - 1:
+    if nowrow == n_rows - 1 or nowcol == n_rows - 1:
         return m, stack
 
     # 1. Skip any zero columns
