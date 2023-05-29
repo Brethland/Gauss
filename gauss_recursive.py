@@ -43,7 +43,7 @@ def gauss_rec(
 
     # 1. Skip any zero columns
     # TODO: Optimization potential: Checking if nullrow can fail by returning the index of nonzero row for that column
-    while is_nullrow(column(m, nowcol)[nowrow:]):
+    while is_nullrow(column(m[nowrow:][nowcol:], nowcol)):
         if trace:
             print(f"\n{indentation}Skipping at least one zero-column...")
         nowcol += 1
@@ -54,7 +54,7 @@ def gauss_rec(
     # 2. Establish a useful toprow, swap if necessary. column(m, nowcol) is guaranteed to have a pivotrow
     pivot = m[nowrow][nowcol]
     if pivot == 0:
-        elem_swap = S(n_rows, nowrow, find_pivot_row_index(column(m, nowcol)[nowrow:]))
+        elem_swap = S(n_rows, nowrow, find_pivot_row_index(column(m[nowrow:][nowcol:], 0)))
         if trace:
             stack.append(elem_swap)
         m = mult(elem_swap, m)
@@ -62,7 +62,7 @@ def gauss_rec(
         if trace:
             # print(f"Swapped with good pivot row (using: S({n_rows}, {nowrow}, {find_pivot_row_index(column(m, nowcol))}))")
             print(
-                f"\n{indentation}Swapped row {nowrow + 1} with good pivot row {find_pivot_row_index(column(m, nowcol)) + 1}\n"
+                    f"\n{indentation}Swapped row {nowrow + 1} with good pivot row {find_pivot_row_index(column(m[nowrow:][nowcol:], 0)) + 1}\n"
             )
             show_indent(m, depth)
     elif trace:
@@ -106,6 +106,8 @@ def gauss_rec_go(m: M):
         return m
     if m == [[0] * n_cols] * n_rows:
         return m
+    print("Bring the following matrix to row_echelon form:\n")
+    show(m)
     return gauss_rec(m, 0, 0, n_rows, n_cols, [], 0)
 
 if __name__ == '__main__':
