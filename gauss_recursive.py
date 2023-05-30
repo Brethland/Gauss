@@ -47,6 +47,8 @@ def gauss_rec(
         if trace:
             print(f"\n{indentation}Skipping at least one zero-column...")
         nowcol += 1
+        if nowcol == n_cols - 1:
+            return m, stack
 
     if trace:
         print(f"\n{indentation}-- Establish a useful toprow --")
