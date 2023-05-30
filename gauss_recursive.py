@@ -5,7 +5,7 @@ trace = True
 
 def find_pivot_row_index(column: R) -> int:
     """Assuming `column` contains a non-zero value, find it's (row) index"""
-    for i in range(1, len(column)):
+    for i in range(len(column)):
         if column[i] != 0:
             return i
         else:
@@ -111,4 +111,4 @@ def gauss_rec_go(m: M):
 
 if __name__ == '__main__':
     from example import Good_Matrix, Demo_Matrix
-    gauss_rec_go(Good_Matrix)
+    gauss_rec_go(Demo_Matrix)
